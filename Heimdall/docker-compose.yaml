@@ -1,0 +1,19 @@
+version: "2.1"
+services:
+  heimdall:
+    image: lscr.io/linuxserver/heimdall:latest
+    container_name: heimdall
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=US/Eastern
+    volumes:
+      - app_data:/config
+    ports:
+      - 80:80
+      - 443:443
+    restart: unless-stopped
+    network_mode: bridge
+volumes:
+  app_data:
+    driver: local
