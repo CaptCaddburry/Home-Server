@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  minecraft:
+    image: itzg/minecraft-bedrock-server
+    container_name: minecraft
+    ports:
+      - "19132:19132/udp"
+    environment:
+      EULA: "TRUE"
+      VERSION: LATEST
+      SERVER_NAME: {SERVER_NAME} #Name of Server
+      LEVEL_NAME: {LEVEL_NAME} #Name of Level
+      GAMEMODE: {GAMEMODE} #Gamemode can be either adventure, survival, or creative
+      DIFFICULTY: {DIFFICULTY} #Difficulty can be either peaceful, easy, normal, or hard
+      ALLOW-CHEATS: "FALSE"
+      DEFAULT-PLAYER-PERMISSION-LEVEL: "member"
+      OPS: {OPERATORS} #ID of Xbox user you want to be assigned Operator permissions
+    volumes:
+      - app_data:/data
+    restart: unless-stopped
+    network_mode: bridge
+volumes:
+  app_data:
+    driver: local
