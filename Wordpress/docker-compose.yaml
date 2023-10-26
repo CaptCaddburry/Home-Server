@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+  wordpress_site:
+    image: wordpress:latest
+    container_name: caddhome_site
+    restart: always
+    ports:
+      - {PORTS}
+    depends_on:
+      - database
+    environment:
+      WORDPRESS_DB_HOST: {DB_NAME}
+      WORDPRESS_DB_USER: {DB_USER}
+      WORDPRESS_DB_PASSWORD: {DB_PASSWORD}
+      WORDPRESS_DB_NAME: {DB_NAME}
+    volumes:
+      - site_data:/var/www/html/
+      - wp_data:/var/www/html/wp-content/
+  database:
+    image: mysql:latest
+    container_name: caddhome_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: {DB_NAME}
+      MYSQL_USER: {DB_USER}
+      MYSQL_PASSWORD: {DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: {DB_ROOT_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql/
+volumes:
+  site_data:
+    driver: local
+  wp_data:
+    driver: local
+  db_data:
+    driver: local
