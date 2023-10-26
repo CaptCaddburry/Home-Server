@@ -1,0 +1,33 @@
+version: "2.1"
+services:
+  wireguard:
+    image: lscr.io/linuxserver/wireguard:latest
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=US/Eastern
+      - SERVERURL={SERVERURL} #I have mine set to external IP of network
+ #optional
+      - SERVERPORT=51820
+      - PEERS={PEERS} #Devices you are connecting to the VPN. Each peer will get separate folder with conf file to connect them to the VPN server
+      - PEERDNS=auto
+      - INTERNAL_SUBNET=10.13.13.0
+      - ALLOWEDIPS=0.0.0.0/0
+      - PERSISTENTKEEPALIVE_PEERS=
+      - LOG_CONFS=true
+    volumes:
+      - app_data:/config
+      - /lib/modules:/lib/modules
+    ports:
+      - 51820:51820/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
+    network_mode: bridge
+volumes:
+  app_data:
+    driver: local
