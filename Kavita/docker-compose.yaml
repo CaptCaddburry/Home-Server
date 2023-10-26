@@ -1,0 +1,21 @@
+version: "2.1"
+services:
+  kavita:
+    image: lscr.io/linuxserver/kavita:latest
+    container_name: kavita
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=US/Eastern
+    volumes:
+      - config_data:/config
+      - app_data:/data
+    ports:
+      - 5000:5000
+    restart: unless-stopped
+    network_mode: bridge
+volumes:
+  config_data:
+    driver: local
+  app_data:
+    driver: local
