@@ -1,0 +1,23 @@
+version: "3.7"
+services:
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf
+    container_name: audiobookshelf
+    ports:
+      - 13378:80
+    volumes:
+      - audiobooks:/audiobooks
+      - podcasts:/podcasts
+      - metadata:/metadata
+      - config:/config
+    restart: unless-stopped
+    network_mode: bridge
+volumes:
+  audiobooks:
+    driver: local
+  podcasts:
+    driver: local
+  metadata:
+    driver: local
+  config:
+    driver: local
